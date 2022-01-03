@@ -4,9 +4,9 @@ export const createRequest = createAction('CREATE_REQUEST');
 export const createSuccess = createAction('CREATE_SUCCESS');
 export const createFailure = createAction('CREATE_FAILURE');
 
-export const listRequest = createAction('LIST_REQUEST');
-export const listSuccess = createAction('LIST_SUCCESS');
-export const listFailure = createAction('LIST_FAILURE');
+export const productListRequest = createAction('LIST_REQUEST');
+export const productListSuccess = createAction('LIST_SUCCESS');
+export const productListFailure = createAction('LIST_FAILURE');
 
 export const findRequest = createAction('FIND_REQUEST');
 export const findSuccess = createAction('FIND_SUCCESS');

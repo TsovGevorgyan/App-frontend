@@ -1,41 +1,74 @@
-import { Table } from 'reactstrap';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import DataTable from 'react-data-table-component';
+import _ from 'lodash';
 
-// useEffect(() => {}, []);
+import {
+  productListRequest,
+  updateRequest,
+  deleteRequest,
+} from '../../../../redux/product/actions';
+import { productColumns } from '../../../../utility/tableColumns';
+import EditProductModal from '../../../../modals/product/edit';
+
+const defaultEditModal = {
+  isShow: false,
+  row: {},
+};
+
 const Dashboard = () => {
+  const dispatch = useDispatch();
+
+  const { userProducts, isUpdateSuccess } = useSelector(
+    (store) => store.product
+  );
+
+  const [editModal, setEditModal] = useState(defaultEditModal);
+
+  useEffect(() => {
+    dispatch(productListRequest());
+  }, []);
+
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      setEditModal(defaultEditModal);
+    }
+  }, [isUpdateSuccess]);
+
+  const handleDelete = (id) => {
+    const payload = { id };
+    dispatch(deleteRequest(payload));
+    console.log(id);
+  };
+
+  const handleEdit = (row) => {
+    setEditModal({ row, isShow: true });
+  };
+
+  const columns = useMemo(
+    () => productColumns({ handleEdit, handleDelete }),
+    []
+  );
+
+  const handleEditSubmit = (data, id) => {
+    const payload = { data, id };
+    dispatch(updateRequest(payload));
+  };
+
   return (
     <div>
-      <Table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>First Name</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </Table>
+      <DataTable columns={columns} data={userProducts} />
+
+      {editModal.isShow && (
+        <EditProductModal
+          show={editModal.isShow}
+          row={editModal.row}
+          submit={handleEditSubmit}
+          onClose={() =>
+            setEditModal((prevState) => ({ ...prevState, isShow: false }))
+          }
+        />
+      )}
     </div>
   );
 };

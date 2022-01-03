@@ -19,8 +19,9 @@ import { useHistory } from 'react-router-dom';
 const Login = () => {
   const dispatch = useDispatch();
 
-  const { isLoginFailure, loginErrorMessage, isLoginSuccess, userAccount } =
-    useSelector((store) => store.auth);
+  const { isLoginFailure, loginErrorMessage, isLoginSuccess } = useSelector(
+    (store) => store.auth
+  );
 
   const [formErrors, setFormErrors] = useState({
     email: { error: true, message: 'Email is required' },
@@ -34,8 +35,6 @@ const Login = () => {
   const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
 
   const createData = useRef({});
-
-  const history = useHistory();
 
   useEffect(() => {
     if (loginErrorMessage) {
@@ -101,10 +100,8 @@ const Login = () => {
                   name={name}
                   placeholder={placeholder}
                   invalid={isShowErrorMessage && formErrors[field].error}
-                  valid={successMessage.message}
                 />
                 <FormFeedback>{formErrors[field].message}</FormFeedback>
-                <FormFeedback valid>{successMessage.message}</FormFeedback>
               </FormGroup>
             ))}
             <Button

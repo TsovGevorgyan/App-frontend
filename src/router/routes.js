@@ -2,7 +2,7 @@ import { lazy } from 'react';
 
 import Login from '../views/apps/login';
 import Register from '../views/apps/register';
-import BuyerDashboard from '../views/apps/dashboard/buyerDashboard';
+import BuyerDashboard from '../views/apps/dashboard/buyerDashboard/index';
 import SellerDashboard from '../views/apps/dashboard/sellerDashboard';
 
 const user = localStorage.getItem('userAccount');

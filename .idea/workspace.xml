@@ -2,7 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="da479d6a-5537-4238-a80d-42934c761025" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modals/product/edit.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utility/tableColumns.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/axios/instance.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/axios/instance.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configs/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/configs/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/product/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/product/actions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/product/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/product/reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/product/saga.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/product/saga.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/rootSaga.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/rootSaga.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/apps/dashboard/buyerDashboard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/apps/dashboard/buyerDashboard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/apps/login/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/apps/login/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +105,7 @@
       <workItem from="1640075527102" duration="5241000" />
       <workItem from="1640084183900" duration="146803000" />
       <workItem from="1640705027404" duration="24314000" />
-      <workItem from="1641192299268" duration="4221000" />
+      <workItem from="1641192299268" duration="25015000" />
     </task>
     <servers />
   </component>

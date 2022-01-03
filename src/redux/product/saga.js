@@ -3,9 +3,9 @@ import {
   createRequest,
   createSuccess,
   createFailure,
-  listRequest,
-  listSuccess,
-  listFailure,
+  productListRequest,
+  productListSuccess,
+  productListFailure,
   findRequest,
   findSuccess,
   findFailure,
@@ -33,12 +33,11 @@ function* create({ payload }) {
 }
 
 function* list() {
-  debugger;
   try {
     const response = yield call(() => instance.get(`${URL}`));
-    yield put(listSuccess(response.data));
+    yield put(productListSuccess(response.data));
   } catch (e) {
-    yield put(listFailure(e?.response?.data?.details[0]));
+    yield put(productListFailure(e?.response?.data?.details[0]));
   }
 }
 
@@ -52,19 +51,36 @@ function* find({ payload }) {
 }
 
 function* update({ payload }) {
-  // payload = {id:3,data:{name:'tezt'}}
   try {
     const response = yield call(() =>
       instance.put(`${URL}/${payload.id}`, payload.data)
     );
-    yield put(updateSuccess(response.data));
+    console.log('payload', payload);
+    yield put(
+      updateSuccess({
+        product: response.data,
+      })
+    );
   } catch (e) {
-    yield put(findFailure(e?.response?.data.message));
+    console.log(e);
+
+    yield put(updateFailure(e?.response?.data.message));
   }
 }
+
+function* remove({ payload }) {
+  try {
+    const response = yield call(() => instance.delete(`${URL}/${payload.id}`));
+    yield put(deleteSuccess({ product: response.data }));
+  } catch (e) {
+    yield put(deleteFailure(e?.response?.data.message));
+  }
+}
+
 export default function* () {
   yield takeLatest(createRequest, create);
-  yield takeLatest(listRequest, list);
+  yield takeLatest(productListRequest, list);
   yield takeLatest(findRequest, find);
   yield takeLatest(updateRequest, update);
+  yield takeLatest(deleteRequest, remove);
 }

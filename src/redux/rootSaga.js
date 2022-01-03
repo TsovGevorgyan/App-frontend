@@ -4,7 +4,6 @@ import product from './product/saga';
 
 function* rootSaga() {
   yield all([auth(), product()]);
-  //yield all([product()]);
 }
 
 export default rootSaga;

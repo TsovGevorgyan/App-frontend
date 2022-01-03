@@ -4,7 +4,7 @@ const headers = {
   'Access-Control-Allow-Origin': '*',
 };
 if (token) {
-  headers.Authorization = `Bearer ${token}`;
+  headers.authorization = `Bearer ${token}`;
 }
 const instance = axios.create({
   headers,
