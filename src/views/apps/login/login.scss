@@ -1,0 +1,20 @@
+.login{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-content{
+  width: 500px;
+  height: 100px;
+  margin: 181px 0 0 0;
+}
+.login-button{
+  color: #4873b3;
+  border-color: #4c6d9f;
+  float: right;
+  width: 20%;
+  margin: 20px;
+  &:hover{
+    background-color: #7c9ac7;
+  }
+}
