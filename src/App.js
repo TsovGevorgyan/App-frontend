@@ -4,11 +4,17 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import AppRouter from './router';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Navigation from './navigation';
 
 const App = () => {
+  // useEffect(() => {
+  //
+  // });
   return (
     <div className="test">
-      <AppRouter />
+      <AppRouter>
+        <Navigation />
+      </AppRouter>
     </div>
   );
 };

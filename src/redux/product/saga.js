@@ -16,7 +16,6 @@ import {
   deleteSuccess,
   deleteFailure,
 } from './actions';
-import axios from 'axios';
 import instance from '../../axios/instance';
 
 import { apiUrl } from '../../configs';
@@ -25,18 +24,24 @@ const URL = `${apiUrl}/product`;
 
 function* create({ payload }) {
   try {
-    const response = yield call(() => instance.post(`${URL}`, payload));
+    const response = yield call(() => instance.post(`${URL}`, payload.data));
+    console.log('sagas payload', response.data);
     yield put(createSuccess(response.data));
   } catch (e) {
     yield put(createFailure(e?.response?.data?.details[0]));
   }
 }
 
-function* list() {
+function* list({ payload = {} }) {
   try {
-    const response = yield call(() => instance.get(`${URL}`));
+    const response = yield call(() =>
+      instance.get(`${URL}${payload.query || ''}`)
+    );
+    console.log('sagas payload', payload);
+    console.log('sagas payload', response.data);
     yield put(productListSuccess(response.data));
   } catch (e) {
+    console.log(e);
     yield put(productListFailure(e?.response?.data?.details[0]));
   }
 }
@@ -55,23 +60,20 @@ function* update({ payload }) {
     const response = yield call(() =>
       instance.put(`${URL}/${payload.id}`, payload.data)
     );
-    console.log('payload', payload);
     yield put(
       updateSuccess({
         product: response.data,
       })
     );
   } catch (e) {
-    console.log(e);
-
     yield put(updateFailure(e?.response?.data.message));
   }
 }
 
 function* remove({ payload }) {
   try {
-    const response = yield call(() => instance.delete(`${URL}/${payload.id}`));
-    yield put(deleteSuccess({ product: response.data }));
+    yield call(() => instance.delete(`${URL}/${payload.id}`));
+    yield put(deleteSuccess(payload));
   } catch (e) {
     yield put(deleteFailure(e?.response?.data.message));
   }

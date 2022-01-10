@@ -15,11 +15,13 @@ import {
   deleteSuccess,
   deleteFailure,
 } from './actions';
+import _ from 'lodash';
 
 import { handleActions } from 'redux-actions';
 
 const initialState = {
   userProducts: [],
+  count: 0,
   productItem: {},
   errorMessage: '',
   isCreateSuccess: false,
@@ -48,13 +50,17 @@ const reducer = handleActions(
       isCreateSuccess: false,
       isCreateFailure: false,
     }),
-    [createSuccess]: (state, { payload }) => ({
-      ...state,
-      userProducts: payload,
-      isCreateRequest: false,
-      isCreateSuccess: true,
-      isCreateFailure: false,
-    }),
+    [createSuccess]: (state, { payload }) => {
+      const copyState = _.cloneDeep(state);
+      copyState.userProducts.push(payload.product);
+      return {
+        ...state,
+        userProducts: copyState.userProducts,
+        isCreateRequest: false,
+        isCreateSuccess: true,
+        isCreateFailure: false,
+      };
+    },
     [createFailure]: (state, { payload }) => ({
       ...state,
       isCreateRequest: false,
@@ -70,7 +76,8 @@ const reducer = handleActions(
     }),
     [productListSuccess]: (state, { payload }) => ({
       ...state,
-      userProducts: payload,
+      userProducts: payload.rows,
+      count: payload.count,
       isProductListSuccess: true,
       isProductListFailure: false,
       isProductListRequest: false,
@@ -134,13 +141,17 @@ const reducer = handleActions(
       isDeleteSuccess: false,
       isDeleteFailure: false,
     }),
-    [deleteSuccess]: (state, { payload }) => ({
-      ...state,
-      isDeleteRequest: false,
-      isDeleteSuccess: true,
-      isDeleteFailure: false,
-      userProducts: payload,
-    }),
+    [deleteSuccess]: (state, { payload }) => {
+      return {
+        ...state,
+        isDeleteRequest: false,
+        isDeleteSuccess: true,
+        isDeleteFailure: false,
+        userProducts: state.userProducts.filter(
+          (item) => item.id !== payload.id
+        ),
+      };
+    },
     [deleteFailure]: (state, { payload }) => ({
       ...state,
       isDeleteRequest: false,

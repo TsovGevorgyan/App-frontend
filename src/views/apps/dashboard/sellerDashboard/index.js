@@ -1,4 +1,11 @@
-const Dashboard = () => {
-  return <div>Seller</div>;
+import Products from '../../pages/seller';
+
+const SellerDashboard = () => {
+  return (
+    <div>
+      <Products />
+    </div>
+  );
 };
-export default Dashboard;
+
+export default SellerDashboard;

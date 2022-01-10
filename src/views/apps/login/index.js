@@ -13,8 +13,7 @@ import _ from 'lodash';
 import './login.scss';
 import { loginRequest } from '../../../redux/auth/actions';
 import { loginInputField } from '../../../utility/constants';
-import { loginValidate } from '../../../redux/auth/validators/validateLogin';
-import { useHistory } from 'react-router-dom';
+import { Validate } from './validate';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -28,8 +27,8 @@ const Login = () => {
     password: { error: true, message: 'Password is required' },
   });
 
-  const [successMessage, setSuccessMessage] = useState({
-    successMessage: { state: false, message: '' },
+  const [loginFeedback, setLoginFeedback] = useState({
+    loginFeedbackMessage: '',
   });
 
   const [isShowErrorMessage, setIsShowErrorMessage] = useState(false);
@@ -37,25 +36,10 @@ const Login = () => {
   const createData = useRef({});
 
   useEffect(() => {
-    if (loginErrorMessage) {
-      const copyFormErrors = _.cloneDeep(formErrors);
-      for (const [field, error] of Object.entries(copyFormErrors)) {
-        const value = createData.current;
-        switch (field) {
-          case 'email':
-            if (!value || loginErrorMessage['email'] !== undefined) {
-              error.error = true;
-              error.message = loginErrorMessage.email;
-            }
-            break;
-          case 'password':
-            if (!value || loginErrorMessage.path[0] == 'password') {
-              error.error = true;
-              error.message = loginErrorMessage.message;
-            }
-        }
-      }
-      setFormErrors(copyFormErrors);
+    const copyLoginFeedback = _.cloneDeep(loginFeedback);
+    if (isLoginFailure) {
+      copyLoginFeedback.loginFeedbackMessage = loginErrorMessage;
+      setLoginFeedback(copyLoginFeedback);
     }
   }, [isLoginFailure]);
 
@@ -63,8 +47,6 @@ const Login = () => {
     if (isLoginSuccess) {
       window.location.replace('/dashboard');
     }
-
-    console.log('successMessage', successMessage);
   }, [isLoginSuccess]);
 
   const handleInputChange = (value, field) => {
@@ -73,7 +55,7 @@ const Login = () => {
 
   const validateInput = (value, field) => {
     const error = _.cloneDeep(formErrors[field]);
-    loginValidate(value, field, error);
+    Validate(value, field, error);
     setFormErrors((prevState) => ({ ...prevState, [field]: error }));
   };
 
@@ -104,6 +86,13 @@ const Login = () => {
                 <FormFeedback>{formErrors[field].message}</FormFeedback>
               </FormGroup>
             ))}
+            {loginFeedback.loginFeedbackMessage != '' ? (
+              <p style={{ color: 'red' }}>
+                {loginFeedback.loginFeedbackMessage}
+              </p>
+            ) : (
+              ''
+            )}
             <Button
               className="login-button"
               onClick={() => handleSubmit()}

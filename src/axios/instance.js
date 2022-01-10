@@ -9,5 +9,5 @@ if (token) {
 const instance = axios.create({
   headers,
 });
-
+console.log(instance);
 export default instance;

@@ -1,4 +1,5 @@
 import { FaEdit } from 'react-icons/fa';
+import { FiDelete } from 'react-icons/fi';
 export const productColumns = ({ handleDelete, handleEdit }) => {
   return [
     {
@@ -17,8 +18,28 @@ export const productColumns = ({ handleDelete, handleEdit }) => {
       name: 'Actions',
       selector: (row) => (
         <div className="d-flex">
-          <button onClick={() => handleDelete(row.id)}>delete</button>
-          <FaEdit onClick={() => handleEdit(row)}>edit</FaEdit>
+          {/*<Delete onClick={() => handleDelete(row)} />*/}
+
+          <FaEdit
+            style={{
+              fontSize: '28px',
+              color: '#462e66',
+              opacity: '0.7',
+              margin: 10,
+              cursor: 'pointer',
+            }}
+            onClick={() => handleEdit(row)}
+          />
+          <FiDelete
+            style={{
+              fontSize: '28px',
+              color: '#462e66',
+              opacity: '0.7',
+              margin: 10,
+              cursor: 'pointer',
+            }}
+            onClick={() => handleDelete(row)}
+          />
         </div>
       ),
     },

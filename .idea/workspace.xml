@@ -2,22 +2,41 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="da479d6a-5537-4238-a80d-42934c761025" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/modals/product/edit.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utility/tableColumns.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modals/product/delete.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/navigation/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/navigation/routes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utility/inputes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utility/queryObject.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/apps/dashboard/sellerDashboard/createHeader.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/apps/login/validate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/apps/pages/buyer/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/apps/pages/seller/createProduct.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/apps/pages/seller/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/apps/register/validate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/components/search/search.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/components/table/header.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/components/table/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/components/table/pagination.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/axios/instance.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/axios/instance.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/configs/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/configs/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/product/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/product/actions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modals/product/edit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modals/product/edit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/auth/saga.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/auth/saga.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/auth/validators/validateLogin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/auth/validators/validateLogin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/product/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/product/reducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/product/saga.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/product/saga.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/rootSaga.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/rootSaga.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/scss/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/scss/style.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utility/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utility/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utility/tableColumns.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/tableColumns.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/apps/dashboard/buyerDashboard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/apps/dashboard/buyerDashboard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/apps/dashboard/sellerDashboard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/apps/dashboard/sellerDashboard/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/apps/login/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/apps/login/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/apps/register/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/apps/register/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,6 +51,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="SCSS File" />
+        <option value="TypeScript File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -67,6 +87,7 @@
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2021.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -105,7 +126,7 @@
       <workItem from="1640075527102" duration="5241000" />
       <workItem from="1640084183900" duration="146803000" />
       <workItem from="1640705027404" duration="24314000" />
-      <workItem from="1641192299268" duration="25015000" />
+      <workItem from="1641192299268" duration="123274000" />
     </task>
     <servers />
   </component>
