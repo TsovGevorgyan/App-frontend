@@ -36,7 +36,7 @@ function* login({ payload }) {
     localStorage.setItem('userAccount', JSON.stringify(response.data.user));
     localStorage.setItem('accessToken', response.data.token);
   } catch (e) {
-    yield put(loginFailure(e?.response?.data?.details[0]));
+    yield put(loginFailure(e?.response?.data?.message));
   }
 }
 

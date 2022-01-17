@@ -2,9 +2,9 @@ import {
   createRequest,
   createSuccess,
   createFailure,
-  listRequest,
-  listSuccess,
-  listFailure,
+  productListRequest,
+  productListSuccess,
+  productListFailure,
   findRequest,
   findSuccess,
   findFailure,
@@ -14,12 +14,17 @@ import {
   deleteRequest,
   deleteSuccess,
   deleteFailure,
+  productRemoveFile,
 } from './actions';
+import _ from 'lodash';
 
 import { handleActions } from 'redux-actions';
+import { removeFileRequest } from '../file/actions';
 
 const initialState = {
-  userProducts: {},
+  userProducts: [],
+  count: 0,
+  productItem: {},
   errorMessage: '',
   isCreateSuccess: false,
   isCreateFailure: false,
@@ -46,38 +51,41 @@ const reducer = handleActions(
       isCreateRequest: true,
       isCreateSuccess: false,
       isCreateFailure: false,
-      userProducts: {},
     }),
-    [createSuccess]: (state, { payload }) => ({
+    [createSuccess]: (state, { payload }) => {
+      const copyState = _.cloneDeep(state);
+      copyState.userProducts.push(payload.product);
+      return {
+        ...state,
+        userProducts: copyState.userProducts,
+        isCreateRequest: false,
+        isCreateSuccess: true,
+        isCreateFailure: false,
+        errorMessage: payload.message,
+      };
+    },
+    [createFailure]: (state, { payload }) => ({
       ...state,
-      userProducts: payload,
-      isCreateRequest: false,
-      isCreateSuccess: true,
-      isCreateFailure: false,
-    }),
-    [createFailure()]: (state, { payload }) => ({
-      ...state,
-      userProducts: {},
       isCreateRequest: false,
       isCreateSuccess: false,
       isCreateFailure: true,
       errorMessage: payload,
     }),
-    [listRequest]: (state) => ({
+    [productListRequest]: (state) => ({
       ...state,
       isProductListSuccess: false,
       isProductListFailure: false,
       isProductListRequest: true,
-      userAccount: {},
     }),
-    [listSuccess]: (state, { payload }) => ({
+    [productListSuccess]: (state, { payload }) => ({
       ...state,
-      userProducts: payload,
+      userProducts: payload.rows,
+      count: payload.count,
       isProductListSuccess: true,
       isProductListFailure: false,
       isProductListRequest: false,
     }),
-    [listFailure]: (state, { payload }) => ({
+    [productListFailure]: (state, { payload }) => ({
       ...state,
       isProductListFailure: true,
       isProductListRequest: false,
@@ -89,21 +97,21 @@ const reducer = handleActions(
       isFindProductRequest: true,
       isFindProductSuccess: false,
       isFindProductFailure: false,
-      userProducts: {},
+      productItem: {},
     }),
     [findSuccess]: (state, { payload }) => ({
       ...state,
-      userProducts: payload,
+      productItem: payload,
       isFindProductRequest: false,
       isFindProductSuccess: true,
       isFindProductFailure: false,
     }),
     [findFailure]: (state, { payload }) => ({
       ...state,
-      userProducts: {},
       isFindProductRequest: false,
       isFindProductSuccess: false,
       isFindProductFailure: true,
+      productItem: {},
       errorMessage: payload,
     }),
     [updateRequest]: (state) => ({
@@ -111,15 +119,20 @@ const reducer = handleActions(
       isUpdateRequest: true,
       isUpdateSuccess: false,
       isUpdateFailure: false,
-      userProducts: {},
     }),
-    [updateSuccess]: (state, { payload }) => ({
-      ...state,
-      isUpdateRequest: false,
-      isUpdateSuccess: true,
-      isUpdateFailure: false,
-      userProducts: payload,
-    }),
+    [updateSuccess]: (state, { payload }) => {
+      return {
+        ...state,
+        isUpdateRequest: false,
+        isUpdateSuccess: true,
+        isUpdateFailure: false,
+        userProducts: state.userProducts.map((item) =>
+          item.id === payload.product.product.id
+            ? payload.product.product
+            : item
+        ),
+      };
+    },
     [updateFailure]: (state, { payload }) => ({
       ...state,
       isUpdateRequest: false,
@@ -132,22 +145,37 @@ const reducer = handleActions(
       isDeleteRequest: true,
       isDeleteSuccess: false,
       isDeleteFailure: false,
-      userProducts: {},
     }),
-    [deleteSuccess()]: (state, { payload }) => ({
-      ...state,
-      isDeleteRequest: false,
-      isDeleteSuccess: true,
-      isDeleteFailure: false,
-      userProducts: payload,
-    }),
-    [deleteFailure()]: (state, { payload }) => ({
+    [deleteSuccess]: (state, { payload }) => {
+      return {
+        ...state,
+        isDeleteRequest: false,
+        isDeleteSuccess: true,
+        isDeleteFailure: false,
+        userProducts: state.userProducts.filter(
+          (item) => item.id !== payload.id
+        ),
+      };
+    },
+    [deleteFailure]: (state, { payload }) => ({
       ...state,
       isDeleteRequest: false,
       isDeleteSuccess: false,
       isDeleteFailure: true,
       errorMessage: payload,
     }),
+    [productRemoveFile]: (state, { payload }) => {
+      // const product = state.userProducts.find(
+      //   (item) => item.File?.id === payload
+      // );
+
+      return {
+        ...state,
+        userProducts: state.userProducts.map((item) =>
+          item.File?.id === payload ? { ...item, File: null } : item
+        ),
+      };
+    },
   },
   initialState
 );

@@ -13,7 +13,7 @@ import _ from 'lodash';
 import './register.scss';
 import { registerRequest, userCheckRequest } from '../../../redux/auth/actions';
 import { registerInputField } from '../../../utility/constants';
-import { registerValidate } from '../../../redux/auth/validators/validateRegister';
+import { Validate } from './validate';
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -54,13 +54,13 @@ const Register = () => {
         const value = createData.current;
         switch (field) {
           case 'firstName':
-            if (!value || errorMessage.path[0] == 'firstName') {
+            if (!value || errorMessage.path[0] === 'firstName') {
               error.error = true;
               error.message = errorMessage.message;
             }
             break;
           case 'lastName':
-            if (!value || errorMessage.path[0] == 'lastName') {
+            if (!value || errorMessage.path[0] === 'lastName') {
               error.error = true;
               error.message = errorMessage.message;
             }
@@ -72,13 +72,13 @@ const Register = () => {
             }
             break;
           case 'password':
-            if (!value || errorMessage.path[0] == 'password') {
+            if (!value || errorMessage.path[0] === 'password') {
               error.error = true;
               error.message = errorMessage.message;
             }
             break;
           case 'password_confirmation':
-            if (!value || errorMessage.path[0] == 'password_confirmation') {
+            if (!value || errorMessage.path[0] === 'password_confirmation') {
               error.error = true;
               error.message = errorMessage.message;
             }
@@ -112,7 +112,7 @@ const Register = () => {
   const validateInput = (value, field) => {
     const error = _.cloneDeep(formErrors[field]);
     const currentValues = createData;
-    registerValidate(value, field, error, currentValues);
+    Validate(value, field, error, currentValues);
     if (value && field == 'email') {
       checkUser();
     }
