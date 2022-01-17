@@ -1,11 +1,11 @@
 import { Button } from 'reactstrap';
-const CreateHeader = ({ handleSubmit, submit }) => {
+const CreateHeader = ({ handleModalOpen, buttonName }) => {
   console.log('button page');
 
   return (
     <div>
-      <Button onClick={handleSubmit} color="primary">
-        {submit}
+      <Button onClick={() => handleModalOpen()} color="primary">
+        {buttonName}
       </Button>
     </div>
   );

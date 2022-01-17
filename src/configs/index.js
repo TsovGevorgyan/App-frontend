@@ -1,3 +1,3 @@
 const apiUrl = 'http://localhost:5000/api';
-
-export { apiUrl };
+const fileUrl = 'http://localhost:5000';
+export { apiUrl, fileUrl };

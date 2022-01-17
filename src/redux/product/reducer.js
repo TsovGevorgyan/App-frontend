@@ -14,10 +14,12 @@ import {
   deleteRequest,
   deleteSuccess,
   deleteFailure,
+  productRemoveFile,
 } from './actions';
 import _ from 'lodash';
 
 import { handleActions } from 'redux-actions';
+import { removeFileRequest } from '../file/actions';
 
 const initialState = {
   userProducts: [],
@@ -59,6 +61,7 @@ const reducer = handleActions(
         isCreateRequest: false,
         isCreateSuccess: true,
         isCreateFailure: false,
+        errorMessage: payload.message,
       };
     },
     [createFailure]: (state, { payload }) => ({
@@ -124,7 +127,9 @@ const reducer = handleActions(
         isUpdateSuccess: true,
         isUpdateFailure: false,
         userProducts: state.userProducts.map((item) =>
-          item.id === payload.product.id ? payload.product : item
+          item.id === payload.product.product.id
+            ? payload.product.product
+            : item
         ),
       };
     },
@@ -159,6 +164,18 @@ const reducer = handleActions(
       isDeleteFailure: true,
       errorMessage: payload,
     }),
+    [productRemoveFile]: (state, { payload }) => {
+      // const product = state.userProducts.find(
+      //   (item) => item.File?.id === payload
+      // );
+
+      return {
+        ...state,
+        userProducts: state.userProducts.map((item) =>
+          item.File?.id === payload ? { ...item, File: null } : item
+        ),
+      };
+    },
   },
   initialState
 );

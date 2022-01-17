@@ -24,11 +24,15 @@ const URL = `${apiUrl}/product`;
 
 function* create({ payload }) {
   try {
-    const response = yield call(() => instance.post(`${URL}`, payload.data));
+    const response = yield call(() =>
+      instance.post(`${URL}`, payload, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+    );
     console.log('sagas payload', response.data);
     yield put(createSuccess(response.data));
   } catch (e) {
-    yield put(createFailure(e?.response?.data?.details[0]));
+    yield put(createFailure(e?.response?.data?.message));
   }
 }
 
@@ -42,7 +46,7 @@ function* list({ payload = {} }) {
     yield put(productListSuccess(response.data));
   } catch (e) {
     console.log(e);
-    yield put(productListFailure(e?.response?.data?.details[0]));
+    yield put(productListFailure(e?.response?.data));
   }
 }
 
@@ -58,14 +62,20 @@ function* find({ payload }) {
 function* update({ payload }) {
   try {
     const response = yield call(() =>
-      instance.put(`${URL}/${payload.id}`, payload.data)
+      instance.put(`${URL}/${payload.id}`, payload.data, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
     );
+    console.log('payload.data', payload.data);
+    console.log('response', response.data);
     yield put(
       updateSuccess({
         product: response.data,
       })
     );
   } catch (e) {
+    console.log('payload.data', payload.data);
+    console.log('payload', payload);
     yield put(updateFailure(e?.response?.data.message));
   }
 }

@@ -2,7 +2,7 @@ import DataTable from 'react-data-table-component';
 import Header from './header';
 import Pagination from './pagination';
 import { Spinner } from 'reactstrap';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const Table = ({
   columns,
@@ -13,6 +13,7 @@ const Table = ({
   count,
   Button,
   isLoading,
+  isDataExist,
 }) => {
   return (
     <div>

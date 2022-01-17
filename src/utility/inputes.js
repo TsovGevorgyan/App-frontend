@@ -17,4 +17,10 @@ export const productsInput = (row = {}) => [
     placeholder: 'Price',
     defaultValue: row.price || '',
   },
+  {
+    field: 'file',
+    type: 'file',
+    placeholder: 'add image',
+    defaultValue: row.File ? row.File.src : '',
+  },
 ];

@@ -19,3 +19,5 @@ export const updateFailure = createAction('UPDATE_FAILURE');
 export const deleteRequest = createAction('DELETE_REQUEST');
 export const deleteSuccess = createAction('DELETE_SUCCESS');
 export const deleteFailure = createAction('DELETE_FAILURE');
+
+export const productRemoveFile = createAction('PRODUCT_REMOVE_FILE');

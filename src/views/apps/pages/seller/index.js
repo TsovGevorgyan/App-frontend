@@ -16,15 +16,13 @@ import Table from '../../../components/table';
 import Search from '../../../components/search/search';
 import { searchFields } from '../../../../utility/constants';
 import { removeEmptyItemsFromObject } from '../../../../utility';
+import usePrevious from '../../../../hooks/usePrevious';
 
-const defaultCreateModal = {
+const defaultModal = {
   isShow: false,
-  row: {},
+  productId: 0,
 };
-const defaultEditModal = {
-  isShow: false,
-  row: {},
-};
+
 const defaultDeleteModal = {
   isShow: false,
   row: {},
@@ -46,33 +44,56 @@ const Dashboard = () => {
     isDeleteSuccess,
     isCreateSuccess,
     isProductListRequest,
+    isProductFailur,
+    isUpdateFailure,
+    isDeleteFailure,
+    isCreateFailure,
+    errorMessage,
   } = useSelector((store) => store.product);
 
-  const [createModal, setCreateModal] = useState(defaultCreateModal);
+  const prevIsUpdateSuccess = usePrevious(isUpdateSuccess);
+  const prevIsDeleteSuccess = usePrevious(isDeleteSuccess);
+  const prevIsCreateSuccess = usePrevious(isCreateSuccess);
+  const prevIsCreateFailure = usePrevious(isCreateFailure);
+  const prevIsDeleteFailure = usePrevious(isDeleteFailure);
+  const prevIsUpdateFailure = usePrevious(isUpdateFailure);
 
-  const [editModal, setEditModal] = useState(defaultEditModal);
+  const [modal, setModal] = useState(defaultModal);
 
   const [deleteModal, setDeleteModal] = useState(defaultDeleteModal);
 
   const [query, setQuery] = useState(initialQuery);
-
-  // const [pagination, setPagination] = useState({ page: 1, rowPerPage: 10 });
 
   useEffect(() => {
     dispatch(productListRequest());
   }, []);
 
   useEffect(() => {
-    if (isCreateSuccess) {
-      setCreateModal(defaultCreateModal);
+    if (isCreateSuccess && prevIsCreateSuccess === false) {
+      alert('Create Success');
+      setModal(defaultModal);
+    } else if (isCreateFailure && prevIsCreateFailure === false) {
+      alert(errorMessage);
     }
-  }, [isCreateSuccess]);
+  }, [isCreateSuccess, isCreateFailure]);
 
   useEffect(() => {
-    if (isUpdateSuccess) {
-      setEditModal(defaultEditModal);
+    if (isUpdateSuccess && prevIsUpdateSuccess === false) {
+      alert('Update Success');
+      setModal(defaultModal);
+    } else if (isUpdateFailure && prevIsUpdateFailure === false) {
+      alert(errorMessage);
     }
-  }, [isUpdateSuccess]);
+  }, [isUpdateSuccess, isUpdateFailure]);
+
+  useEffect(() => {
+    if (isDeleteSuccess && prevIsDeleteSuccess === false) {
+      alert('Delete Success');
+      setModal(defaultModal);
+    } else if (isDeleteFailure && prevIsDeleteFailure === false) {
+      alert(errorMessage);
+    }
+  }, [isDeleteSuccess, isDeleteFailure]);
 
   useEffect(() => {
     if (isDeleteSuccess) {
@@ -80,32 +101,25 @@ const Dashboard = () => {
     }
   }, [isDeleteSuccess]);
 
-  const handleCreate = () => {
-    setCreateModal({ isShow: true });
+  const handleModalOpen = (productId = 0) => {
+    console.log('productId', productId);
+    setModal({ isShow: true, productId });
   };
 
   const handleDelete = (row) => {
     setDeleteModal({ row, isShow: true });
   };
 
-  const handleEdit = (row) => {
-    setEditModal({ row, isShow: true });
-  };
-
   const columns = useMemo(
-    () => productColumns({ handleEdit, handleDelete }),
+    () => productColumns({ handleModalOpen, handleDelete }),
     []
   );
 
-  const handleInputSubmit = (data, id) => {
-    if (createModal.isShow) {
-      const payload = { data };
-      dispatch(createRequest(payload));
-    }
-
-    if (editModal.isShow) {
-      const payload = { data, id };
-      dispatch(updateRequest(payload));
+  const handleInputSubmit = (id, data) => {
+    if (id) {
+      dispatch(updateRequest({ data, id }));
+    } else {
+      dispatch(createRequest(data));
     }
   };
 
@@ -124,13 +138,9 @@ const Dashboard = () => {
     const queryObj = obj ? obj : { ...query };
     removeEmptyItemsFromObject(queryObj);
     const queryString = QueryObject(queryObj);
-    console.log('obj', obj);
-    console.log('query', query);
-    console.log('queryObj', queryObj);
-
     dispatch(productListRequest({ query: queryString }));
   };
-
+  console.log('row check', modal.row ? Object.keys(modal.row).length : '');
   return (
     <div>
       <Search setQuery={setQuery} search={makeSearch} fields={searchFields} />
@@ -142,28 +152,20 @@ const Dashboard = () => {
         page={query.page}
         count={count}
         Button={() => (
-          <CreateHeader handleSubmit={handleCreate} submit="Create Product" />
+          <CreateHeader
+            handleModalOpen={handleModalOpen}
+            buttonName="Create Product"
+          />
         )}
         isLoading={isProductListRequest}
       />
-      {createModal.isShow && (
+      {modal.isShow && (
         <ProductModal
-          show={createModal.isShow}
+          isEdit={modal.productId}
+          show={modal.isShow}
+          productId={modal.productId}
           submit={handleInputSubmit}
-          row={createModal.row || ''}
-          onClose={() =>
-            setCreateModal((prevState) => ({ ...prevState, isShow: false }))
-          }
-        />
-      )}
-      {editModal.isShow && (
-        <ProductModal
-          show={editModal.isShow}
-          row={editModal.row}
-          submit={handleInputSubmit}
-          onClose={() =>
-            setEditModal((prevState) => ({ ...prevState, isShow: false }))
-          }
+          onClose={() => setModal(defaultModal)}
         />
       )}
       {deleteModal.isShow && (
@@ -176,7 +178,6 @@ const Dashboard = () => {
           }
         />
       )}
-      {/*<Link to={'./createProducts'}>Create Product</Link>*/}
     </div>
   );
 };

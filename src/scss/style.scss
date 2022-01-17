@@ -16,3 +16,26 @@
     font-weight: 700;
   }
 }
+.product {
+  &.image{
+    width: 120px;
+
+
+  }
+}
+
+.modals {
+  &.img{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 103px 0 25px;
+  }
+  &:hover {
+    .icon {
+      &.content {
+        display: block !important;
+      }
+    }
+  }
+}

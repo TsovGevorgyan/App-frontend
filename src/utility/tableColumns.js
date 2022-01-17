@@ -1,6 +1,8 @@
 import { FaEdit } from 'react-icons/fa';
 import { FiDelete } from 'react-icons/fi';
-export const productColumns = ({ handleDelete, handleEdit }) => {
+import { fileUrl } from '../configs';
+
+export const productColumns = ({ handleDelete, handleModalOpen }) => {
   return [
     {
       name: 'Name',
@@ -13,6 +15,18 @@ export const productColumns = ({ handleDelete, handleEdit }) => {
     {
       name: 'Price',
       selector: (row) => row.price,
+    },
+    {
+      name: 'image',
+      selector: (row) => (
+        <div>
+          {row.File ? (
+            <img className="product image" src={`${fileUrl}/${row.File.src}`} />
+          ) : (
+            ''
+          )}
+        </div>
+      ),
     },
     {
       name: 'Actions',
@@ -28,7 +42,7 @@ export const productColumns = ({ handleDelete, handleEdit }) => {
               margin: 10,
               cursor: 'pointer',
             }}
-            onClick={() => handleEdit(row)}
+            onClick={() => handleModalOpen(row.id)}
           />
           <FiDelete
             style={{
